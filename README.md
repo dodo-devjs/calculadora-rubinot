@@ -1,6 +1,6 @@
 # 🧮 Calculadora RubinOT
 
-Mini sistema web desenvolvido para cálculo de pontos e metas do RubinOT.
+Mini sistema web desenvolvido para cálculo custo de compra de um item, RubinoCoin x Gold Coin no RubinOT.
 
 Projeto simples, direto e funcional, criado com HTML, CSS e JavaScript puro.
 
@@ -14,7 +14,7 @@ Projeto simples, direto e funcional, criado com HTML, CSS e JavaScript puro.
 
 ## 📌 Funcionalidades
 
-- Cálculo automático de pontos
+- Cálculo automático do custo
 - Interface centralizada
 - Layout responsivo
 - Design moderno com efeito visual no rodapé
