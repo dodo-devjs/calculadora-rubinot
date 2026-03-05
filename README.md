@@ -8,7 +8,7 @@ Projeto simples, direto e funcional, criado com HTML, CSS e JavaScript puro.
 
 ## 🚀 Acesse o projeto online
 
-🔗 https://SEUUSUARIO.github.io/calculadora-rubinot/
+🔗 (https://dodo-devjs.github.io/calculadora-rubinot/)
 
 ---
 
