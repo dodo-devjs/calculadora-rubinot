@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de Custos</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1e1e2f, #2c2c44);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background-color: #2c2c44;
+        padding: 30px;
+        border-radius: 20px;
+        width: 450px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.6);
+        text-align: center;
+    }
+    
+    footer {
+    margin-top: 30px;
+}
+
+.signature {
+    font-size: 18px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00c6ff, #0072ff, #00c6ff);
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: shine 3s linear infinite;
+    transition: transform 0.3s ease;
+}
+
+.signature:hover {
+    transform: scale(1.1);
+}
+
+@keyframes shine {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+    h1 {
+        margin-bottom: 5px;
+    }
+
+    h3 {
+        font-weight: normal;
+        margin-bottom: 25px;
+        color: #ccc;
+    }
+
+    label {
+        font-size: 14px;
+        margin-top: 15px;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        border-radius: 10px;
+        border: none;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        border-radius: 12px;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+        transform: scale(1.03);
+    }
+
+    .resultado {
+        margin-top: 25px;
+        background-color: #1a1a2e;
+        padding: 15px;
+        border-radius: 12px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    hr {
+        border: 1px solid #444;
+        margin: 10px 0;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGO -->
+
+    <h1>Calculadora de Custos</h1>
+    <h3>Vamos calcular quantos reais (R$) você irá investir no seu novo item.</h3>
+
+    <label>Quanto está valendo o milheiro da RubiniCoin?</label>
+    <input type="text" id="milheiro" placeholder="Ex: 92,00">
+
+    <label>Quanto vale 1 RubiniCoin no Market do servidor?</label>
+    <input type="text" id="unitario" placeholder="Ex: 70.000,00">
+
+    <label>Quanto está custando o item no Market (em Gold)?</label>
+    <input type="text" id="gold" placeholder="Ex: 330.000.000,00">
+
+    <button onclick="calcular()">Calcular Investimento</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <footer>
+        <span class="signature">By: Dodo © 2026</span> 
+    </footer>
+
+</div>
+
+<script>
+
+function formatarNumero(valor) {
+    if (!valor) return NaN;
+
+    valor = valor.trim();
+
+    if (valor.includes(",")) {
+        valor = valor.replace(/\./g, "");
+        valor = valor.replace(",", ".");
+    }
+
+    valor = valor.replace(/[^\d.]/g, "");
+    return parseFloat(valor);
+}
+
+function calcular() {
+
+    const GOLD_POR_RUBI = 70000;
+    const PACOTE = 25;
+
+    let valorMilheiro = formatarNumero(document.getElementById("milheiro").value);
+    let valorUnitarioServidor = formatarNumero(document.getElementById("unitario").value);
+    let gold = formatarNumero(document.getElementById("gold").value);
+
+    if (isNaN(valorMilheiro) || isNaN(valorUnitarioServidor) || isNaN(gold)) {
+        document.getElementById("resultado").innerHTML = "Preencha todos os campos corretamente.";
+        return;
+    }
+
+    let precoUnitMilheiro = valorMilheiro / 1000;
+
+    let rubNecessario = gold / GOLD_POR_RUBI;
+    let pacotes = Math.ceil(rubNecessario / PACOTE);
+    let rubFinal = pacotes * PACOTE;
+
+    let goldFinal = rubFinal * GOLD_POR_RUBI;
+    let sobra = goldFinal - gold;
+
+    let custoMilheiro = rubFinal * precoUnitMilheiro;
+    let custoServidor = rubFinal * valorUnitarioServidor;
+
+    document.getElementById("resultado").innerHTML = `
+        <p><strong>RubiniCoin necessária:</strong> ${rubFinal}</p>
+        <p><strong>Gold total:</strong> ${goldFinal.toLocaleString('pt-BR')}</p>
+        <p><strong>Sobra de Gold:</strong> ${sobra.toLocaleString('pt-BR')}</p>
+        <hr>
+        <p><strong>Custo via Milheiro:</strong> R$ ${custoMilheiro.toLocaleString('pt-BR',{minimumFractionDigits:2})}</p>
+        <p><strong>Custo via Market:</strong> R$ ${custoServidor.toLocaleString('pt-BR',{minimumFractionDigits:2})}</p>
+    `;
+}
+
+</script>
+
+</body>
+</html>
